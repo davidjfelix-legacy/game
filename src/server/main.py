@@ -16,6 +16,19 @@ from __future__ import print_function
 
 def main():
 	print("Running Main Loop!")
+	
+	loop = uv.loop.default_loop()
+	server = pyuv.UDP(loop)
+	server.bind(("0.0.0.0", 1235))
+	server.start_recv(on_read)
+	
+	signal_h = pyuv.Signal(loop)
+	signal_h.start(signal_cb, signal.SIGINT)
+	
+	loop.run()
+	
+	print("Ending main loop")
+
 
 if __name__ == "__main__":
 	print("Hello Server!")
