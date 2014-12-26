@@ -9,7 +9,7 @@ def on_read(handle, ip_port, flags, data, error):
 	if data is not None:
 		handle.send(ip_port, data)
 
-def signal_cb():
+def signal_cb(handle, signum):
 	signal_h.close()
 	responder.close()
 
