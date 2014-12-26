@@ -9,8 +9,9 @@ def on_read(handle, ip_port, flags, data, error):
 	if data is not None:
 		handle.send(ip_port, data)
 
-def signal_cb():
-	pass
+def signal_cb(handle, signum):
+	signal_h.close()
+	server.close()
 
 from __future__ import print_function
 
