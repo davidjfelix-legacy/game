@@ -10,7 +10,8 @@ def on_read(handle, ip_port, flags, data, error):
 		handle.send(ip_port, data)
 
 def signal_cb():
-	pass
+	signal_h.close()
+	responder.close()
 
 
 def main():
