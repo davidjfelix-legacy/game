@@ -5,6 +5,7 @@ class WorldChunk(object):
 		self.is_summary = is_summary
 		self.address = address
 		self.value = value
+		self.entities = {}
 
 class World(object):
 
@@ -19,6 +20,10 @@ class Flatland(World):
 
 	def start_entity_on_flatland(self, coords=None):
 		pass
+
+	def get_view_for_entity(self, entity_id):
+		return (("[ ]" * 10) + "\n") * 10
+
 
 if __name__ == "__main__":
 	world = Flatland()
