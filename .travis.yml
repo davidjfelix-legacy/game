@@ -1,7 +1,12 @@
 language: python
 python:
-  - "3.4"
+  - 3.4
 
-install: "pip install -r requirements.txt"
-script: ./run_tests.sh
-
+install: 
+  - pip install -r requirements.txt
+  - pip install coveralls
+script:
+  - ./run_tests.sh
+  - coverage run
+after_success:
+  - coveralls
