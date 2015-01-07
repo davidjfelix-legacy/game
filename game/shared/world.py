@@ -11,6 +11,10 @@ class World(object):
 
 	def __init__(self):
 		self.data = OctreeNode()
+		self.players = {}
+
+	def add_player(self, player):
+		self.players[str(player)] = player
 
 
 class Flatland(World):

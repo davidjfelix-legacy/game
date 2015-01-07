@@ -10,7 +10,11 @@ class TestWorld(unittest.TestCase):
 	def test_add_player(self):
 		player = Player()
 		self.world.add_player(player)
-		assertTrue(player in self.world.players)
+		self.assertTrue(str(player) in self.world.players)
+
+		player_key = self.world.players.get(str(player))
+		self.assertEquals(player_key, player)
+
 
 if __name__ == "__main__":
 	unittest.main()
