@@ -1,6 +1,6 @@
 from .octree import OctreeNode
 
-class PlayerExistsError(LookupError):
+class EntityExistsError(LookupError):
 	pass
 
 class WorldChunk(object):
@@ -15,13 +15,13 @@ class World(object):
 
 	def __init__(self):
 		self.data = OctreeNode()
-		self.players = {}
+		self.entities = {}
 
-	def add_player(self, player):
-		if repr(player) in self.players:
-			raise PlayerExistsError()
+	def add_entity(self, entity):
+		if repr(entity) in self.entities:
+			raise EntityExistsError()
 
-		self.players[repr(player)] = player
+		self.entities[repr(entity)] = entity
 
 
 class Flatland(World):

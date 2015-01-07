@@ -2,7 +2,7 @@
 from uuid import UUID, uuid4, uuid5
 
 
-class Player(object):
+class Entity(object):
 	
 	def __init__(self, uuid=None):
 		if uuid:
