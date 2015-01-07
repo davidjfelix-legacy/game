@@ -1,4 +1,5 @@
 import unittest
+from uuid import uuid4
 from game.shared.world import World, PlayerExistsError
 from game.shared.player import Player
 
@@ -16,8 +17,9 @@ class TestWorld(unittest.TestCase):
 		self.assertEqual(player_key, player)
 
 	def test_player_exists(self):
-		player1 = Player()
-		player2 = Player()
+		uuid = uuid4()
+		player1 = Player(str(uuid))
+		player2 = Player(str(uuid))
 		self.world.add_player(player1)
 
 		def add_player2():
