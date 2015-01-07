@@ -1,5 +1,8 @@
 from .octree import OctreeNode
 
+class PlayerExistsError(LookupError):
+	pass
+
 class WorldChunk(object):
 	def __init__(self, is_summary, address, value):
 		self.is_summary = is_summary
@@ -14,6 +17,9 @@ class World(object):
 		self.players = {}
 
 	def add_player(self, player):
+		if str(player) in self.players:
+			raise PlayerExistsError()
+
 		self.players[str(player)] = player
 
 
