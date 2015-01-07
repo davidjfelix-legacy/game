@@ -22,7 +22,7 @@ class TestWorld(unittest.TestCase):
 		uuid = uuid4()
 		entity1 = Entity(str(uuid))
 		entity2 = Entity(str(uuid))
-		self.world.add_entity(player1)
+		self.world.add_entity(entity1)
 
 		def add_entity2():
 			self.world.add_entity(entity2)
