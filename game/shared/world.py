@@ -10,6 +10,7 @@ class WorldChunk(object):
 		self.value = value
 		self.entities = {}
 
+
 class World(object):
 
 	def __init__(self):
@@ -17,10 +18,10 @@ class World(object):
 		self.players = {}
 
 	def add_player(self, player):
-		if str(player) in self.players:
+		if repr(player) in self.players:
 			raise PlayerExistsError()
 
-		self.players[str(player)] = player
+		self.players[repr(player)] = player
 
 
 class Flatland(World):

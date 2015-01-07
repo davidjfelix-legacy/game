@@ -10,5 +10,13 @@ class Player(object):
 		else:
 			self.uuid = uuid4()
 
-	def __str__(self):
+		self.display_name = ""	
+
+	
+	def __repr__(self):
 		return str(self.uuid)
+	
+
+	def __str__(self):
+		return str(self.display_name)
+

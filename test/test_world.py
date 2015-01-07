@@ -11,9 +11,9 @@ class TestWorld(unittest.TestCase):
 	def test_add_player(self):
 		player = Player()
 		self.world.add_player(player)
-		self.assertTrue(str(player) in self.world.players)
+		self.assertTrue(repr(player) in self.world.players)
 
-		player_key = self.world.players.get(str(player))
+		player_key = self.world.players.get(repr(player))
 		self.assertEqual(player_key, player)
 
 	def test_player_exists(self):
