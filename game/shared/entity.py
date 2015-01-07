@@ -10,7 +10,10 @@ class Entity(object):
 		else:
 			self.uuid = uuid4()
 
-		self.display_name = ""	
+		self.display_name = ""
+		self.location = ""
+		self.is_name_visible = ""
+		self.scale = 0
 
 	
 	def __repr__(self):

@@ -4,7 +4,8 @@ from game.shared.entity import Entity
 class TestEntity(unittest.TestCase):
 
 	def setUp(self):
-		pass
+		self.entity = Entity()
+
 
 	def test_invalid_uuid(self):
 		invalid_uuid = "elderberries"
@@ -12,8 +13,9 @@ class TestEntity(unittest.TestCase):
 		def make_entity():
 			Entity(uuid=invalid_uuid)
 
-		self.assertRaises(ValueError, make_entity)
-
+		self.assertRaises(ValueError, make_entity)		
+	
+		
 
 if __name__ == "__main__":
 	unittest.main()
