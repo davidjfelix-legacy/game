@@ -29,6 +29,20 @@ class TestWorld(unittest.TestCase):
 
 		self.assertRaises(EntityExistsError, add_entity2)
 
+	def test_tick_count(self):
+		first_tick = self.world.tick_count
+		self.world.tick()
+		second_tick = self.world.tick_count
+
+		self.assertEqual(first_tick + 1, second_tick)
+
+	def test_tick_time(self):
+		first_tick_time = self.world.last_tick_time
+		self.world.tick()
+		second_tick_time = self.world.last_tick_time
+
+		self.assertGreater(second_tick_time, first_tick_time)
+
 
 if __name__ == "__main__":
 	unittest.main()

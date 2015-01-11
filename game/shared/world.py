@@ -1,3 +1,4 @@
+from datetime import datetime
 from .octree import OctreeNode
 
 class EntityExistsError(LookupError):
@@ -16,6 +17,8 @@ class World(object):
 	def __init__(self):
 		self.data = OctreeNode()
 		self.entities = {}
+		self.tick_count = 0
+		self.last_tick_time = datetime.now()
 
 	def add_entity(self, entity):
 		if repr(entity) in self.entities:
@@ -23,4 +26,13 @@ class World(object):
 
 		self.entities[repr(entity)] = entity
 
+	def tick(self):
+		new_tick_time = datetime.now()
+		if self.tick_count != 0:
+			tick_delta = new_tick_time - self.last_tick_time
+			#notify entities
+			#notify children
 
+		self.tick_count += 1
+		self.last_tick_time = new_tick_time
+			
