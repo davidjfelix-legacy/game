@@ -30,7 +30,8 @@ class World(object):
 		new_tick_time = datetime.now()
 		if self.tick_count != 0:
 			tick_delta = new_tick_time - self.last_tick_time
-			#notify entities
+			for entity in entities.values():
+				entity.tick(tick_delta)
 			#notify children
 
 		self.tick_count += 1
