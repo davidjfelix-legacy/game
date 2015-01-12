@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 from uuid import UUID, uuid4
 
+
 class EntityMotion(object):
 
     def __init__(self):
@@ -10,7 +11,7 @@ class EntityMotion(object):
 
     def move(self, time_delta):
         delta = EntityMotion.vel_to_displ_delta(time_delta, self.velocity)
-        self.location = [a + b for a, b in  zip(self.location, delta)]
+        self.location = [a + b for a, b in zip(self.location, delta)]
 
     def accel_move(self, time_delta, acceleration):
         delta_d1 = EntityMotion.vel_to_displ_delta(time_delta, self.velocity)
@@ -19,7 +20,6 @@ class EntityMotion(object):
         delta_d2 = EntityMotion.vel_to_displ_delta(time_delta, self.velocity)
         delta_d = [(a + b)/2 for a, b in zip(delta_d1, delta_d2)]
         self.location = [a + b for a, b in zip(self.location, delta_d)]
-
 
     @staticmethod
     def timedelta_to_seconds(time_delta):

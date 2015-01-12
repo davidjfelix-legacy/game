@@ -3,11 +3,11 @@ from uuid import uuid4
 from game.shared.world import World, EntityExistsError
 from game.shared.entity import Entity
 
+
 class TestWorld(unittest.TestCase):
-    
+
     def setUp(self):
         self.world = World()
-
 
     def test_add_entity(self):
         entity = Entity()
@@ -16,7 +16,6 @@ class TestWorld(unittest.TestCase):
 
         entity_key = self.world.entities.get(repr(entity))
         self.assertEqual(entity_key, entity)
-
 
     def test_entity_already_exists(self):
         uuid = uuid4()
@@ -46,4 +45,3 @@ class TestWorld(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

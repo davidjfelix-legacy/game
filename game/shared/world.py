@@ -1,8 +1,10 @@
 from datetime import datetime
 from .octree import OctreeNode
 
+
 class EntityExistsError(LookupError):
     pass
+
 
 class WorldChunk(object):
     def __init__(self, is_summary, address, value):
@@ -30,10 +32,9 @@ class World(object):
         new_tick_time = datetime.now()
         if self.tick_count != 0:
             tick_delta = new_tick_time - self.last_tick_time
-            for entity in entities.values():
+            for entity in self.entities.values():
                 entity.tick(tick_delta)
-            #notify children
+            # notify children
 
         self.tick_count += 1
         self.last_tick_time = new_tick_time
-            
