@@ -1,4 +1,4 @@
-pyuv
-PySDL2
-PyOpenGL
-PyOpenGL_accelerate
+#pyuv
+#PySDL2
+#PyOpenGL
+#PyOpenGL_accelerate
