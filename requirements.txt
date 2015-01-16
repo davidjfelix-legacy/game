@@ -1,8 +1,0 @@
-pep8
-pytest
-nose
-pylint
-#pyuv
-#PySDL2
-#PyOpenGL
-#PyOpenGL_accelerate
