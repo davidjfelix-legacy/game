@@ -58,7 +58,8 @@ mod chunk {
 
     #[test]
     fn test_adder_from_string() {
-        let known = Address(0b11, 0b11, 0b11);
+        let known = Option::Some(Address(0b11, 0b11, 0b11));
         let unknown = Address::from_string(String::from_str("7"));
+        assert_eq!(known, unknown)
     }
 }
