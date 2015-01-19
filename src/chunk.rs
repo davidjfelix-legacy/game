@@ -12,9 +12,9 @@ mod chunk {
 
     impl Address {
         fn from_string(address: String) -> Address {
-            let mut x: u64 = 0;
-            let mut y: u64 = 0;
-            let mut z: u64 = 0;
+            let mut x: u64 = 1;
+            let mut y: u64 = 1;
+            let mut z: u64 = 1;
             let mut xadd: u8 = 0;
             let mut yadd: u8 = 0;
             let mut zadd: u8 = 0;
@@ -34,6 +34,8 @@ mod chunk {
                     "7" => (1, 1, 1),
                     _ => (0,0,0),
                 };
+                (x, y, z) = (x << 1, y << 1, z << 1)
+                (x, y, z) = (x + xadd, y + yadd, z + zadd)
             }
             Address(x, y, z)
         }
