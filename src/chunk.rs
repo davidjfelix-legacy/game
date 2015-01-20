@@ -2,13 +2,27 @@
 mod chunk {
 
     use std::fmt;
-    struct Address(u64, u64, u64);
+    use std::rc::Rc;
+    use std::rc::Weak;
+
+    struct Address{
+        x: u64,
+        y: u64,
+        z: u64
+    }
 
     struct Chunk {
-        children: [Option<Box<Chunk>>; 8],
-        parent: Option<Box<Chunk>>,
-        summary: i32,
         address: Address,
+        children: [Option<Rc<Chunk>>; 8],
+        entities: Vec<Box<Entity>>,
+        parent: Option<Weak<Chunk>>,
+        scale: u8,
+        summary: i32,
+    }
+
+    struct Entity {
+        mass: Rc<Chunk>,
+        velocity: [f64; 3],
     }
 
     impl Address {
@@ -20,7 +34,7 @@ mod chunk {
                 if i > 63 {
                     break;
                 }
-                xyz_add =  match c.to_digit(8){
+                xyz_add =  match c.to_digit(8) {
                     Some(0) => (0, 0, 0),
                     Some(1) => (0, 0, 1),
                     Some(2) => (0, 1, 0),
@@ -34,7 +48,7 @@ mod chunk {
                 xyz = (xyz.0 << 1, xyz.1 << 1, xyz.2 << 1);
                 xyz = (xyz.0 + xyz_add.0, xyz.1 + xyz_add.1, xyz.2 + xyz_add.2);
             }
-            Some(Address(xyz.0, xyz.1, xyz.2))
+            Some(Address {x: xyz.0, y: xyz.1, z: xyz.2})
         }
     }
 
@@ -46,19 +60,35 @@ mod chunk {
 
     impl PartialEq for Address {
         fn eq(&self, other: &Self) -> bool {
-            (((self.0 == other.0) && (self.1 == other.1)) && (self.2 == other.2))
+            (((self.x == other.x) && (self.y == other.y)) && (self.z == other.z))
         }
     }
 
     impl fmt::Show for Address {
         fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-            write!(f, "Address({}, {}, {})", self.0, self.1, self.2)
+            write!(f, "Address({}, {}, {})", self.x, self.y, self.z)
+        }
+    }
+
+    impl Chunk {
+        fn get_child(self, x: u8, y: u8, z: u8) -> Option<Rc<Chunk>> {
+            match (x, y, z) {
+                //(0, 0, 0) => self.children[0],
+                //(0, 0, 1) => self.children[1],
+                (0, 1, 0) => self.children[2],
+                //(0, 1, 1) => self.children[3],
+                //(1, 0, 0) => self.children[4],
+                //(1, 0, 1) => self.children[5],
+                //(1, 1, 0) => self.children[6],
+                //(1, 1, 1) => self.children[7],
+                _ => None,
+            }
         }
     }
 
     #[test]
     fn test_adder_from_string() {
-        let known = Option::Some(Address(0b11, 0b11, 0b11));
+        let known = Option::Some(Address {x: 0b11, y: 0b11, z: 0b11});
         let unknown = Address::from_string(String::from_str("7"));
         assert_eq!(known, unknown)
     }
