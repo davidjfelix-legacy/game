@@ -71,19 +71,6 @@ mod chunk {
     }
 
     impl Chunk {
-        fn get_child(self, x: u8, y: u8, z: u8) -> Option<Rc<Chunk>> {
-            match (x, y, z) {
-                //(0, 0, 0) => self.children[0],
-                //(0, 0, 1) => self.children[1],
-                (0, 1, 0) => self.children[2],
-                //(0, 1, 1) => self.children[3],
-                //(1, 0, 0) => self.children[4],
-                //(1, 0, 1) => self.children[5],
-                //(1, 1, 0) => self.children[6],
-                //(1, 1, 1) => self.children[7],
-                _ => None,
-            }
-        }
     }
 
     #[test]
