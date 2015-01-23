@@ -5,24 +5,25 @@ mod chunk {
     use std::rc::Rc;
     use std::rc::Weak;
 
-    struct Address{
+    struct Address {
         x: u64,
         y: u64,
-        z: u64
+        z: u64,
+    }
+
+    struct Element {
+        name: String,
     }
 
     struct Chunk {
         address: Address,
         children: [Option<Rc<Chunk>>; 8],
-        entities: Vec<Box<Entity>>,
+        entities: Vec<Rc<Entity>>,
         parent: Option<Weak<Chunk>>,
         scale: u8,
-        summary: i32,
-    }
-
-    struct Entity {
-        mass: Rc<Chunk>,
-        velocity: [f64; 3],
+        summary: Rc<Element>,
+        mass: f64,
+        center: Vec3f64,
     }
 
     impl Address {
@@ -71,6 +72,28 @@ mod chunk {
     }
 
     impl Chunk {
+        fn get_child(&self, x: u8, y: u8, z:u8) -> Option<Rc<Chunk>> {
+            match (x, y, z) {
+                (0, 0, 0) => self.children[0],
+                (0, 0, 1) => self.children[1],
+                (0, 1, 0) => self.children[2],
+                (0, 1, 1) => self.children[3],
+                (1, 0, 0) => self.children[4],
+                (1, 0, 1) => self.children[5],
+                (1, 1, 0) => self.children[6],
+                (1, 1, 1) => self.children[7],
+                _ => None,
+            }
+        }
+
+        fn orphan(&self, child: Rc<Chunk>) {
+        }
+
+        fn emancipate(&self) {
+        }
+
+        fn tick(&self, time_delta: f64) {
+        }
     }
 
     #[test]
