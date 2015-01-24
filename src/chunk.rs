@@ -3,8 +3,7 @@ mod element;
 mod chunk {
 
     use std::fmt;
-    use std::rc::Rc;
-    use std::rc::Weak;
+    use std::rc::{Rc, Weak};
 
     struct Address {
         x: u64,
@@ -17,21 +16,22 @@ mod chunk {
     }
 
     enum ChunkOption<T> {
-        Local(T<Chunk>),
+        Local(T<LocalChunk>),
         Remote(Rc<RemoteChunk>),
         None
     }
 
-    struct Chunk {
+    struct LocalChunk {
         address: Address,
+        center: Vec3f64,
         children: [ChunkOption<Rc>; 8],
         child_number: u8,
         entities: Vec<Rc<Entity>>,
+        mass: f64,
         parent: ChunkOption<Weak>,
         scale: u8,
+        structure: u64,
         summary: Rc<Element>,
-        mass: f64,
-        center: Vec3f64,
     }
 
     struct RemoteChunk {
@@ -83,8 +83,15 @@ mod chunk {
         }
     }
 
-    impl Chunk {
-        fn get_child(&self, x: u8, y: u8, z:u8) -> Option<Rc<Chunk>> {
+    trait Chunk {
+        fn get_child(&self, x: u8, y: u8, z: u8) -> ChunkOption<Rc>;
+        fn orphan(&self, child: <T>);
+        fn emancipate(&self);
+        fn tick(&self, time_delta: f64);
+    }
+
+    impl Chunk for LocalChunk {
+        fn get_child(&self, x: u8, y: u8, z: u8) -> ChunkOption<Rc> {
             match (x, y, z) {
                 (0, 0, 0) => self.children[0],
                 (0, 0, 1) => self.children[1],
@@ -108,8 +115,11 @@ mod chunk {
         }
     }
 
+    impl Chunk for RemoteChunk {
+    }
+
     #[test]
-    fn test_adder_from_string() {
+    fn test_address_from_string() {
         let known = Option::Some(Address {x: 0b11, y: 0b11, z: 0b11});
         let unknown = Address::from_string(String::from_str("7"));
         assert_eq!(known, unknown)
