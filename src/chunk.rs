@@ -1,4 +1,5 @@
 #![allow(dead_code)]
+mod element;
 mod chunk {
 
     use std::fmt;
@@ -15,15 +16,26 @@ mod chunk {
         name: String,
     }
 
+    enum ChunkOption<T> {
+        Local(T<Chunk>),
+        Remote(Rc<RemoteChunk>),
+        None
+    }
+
     struct Chunk {
         address: Address,
-        children: [Option<Rc<Chunk>>; 8],
+        children: [ChunkOption<Rc>; 8],
+        child_number: u8,
         entities: Vec<Rc<Entity>>,
-        parent: Option<Weak<Chunk>>,
+        parent: ChunkOption<Weak>,
         scale: u8,
         summary: Rc<Element>,
         mass: f64,
         center: Vec3f64,
+    }
+
+    struct RemoteChunk {
+        connection: i32,
     }
 
     impl Address {
