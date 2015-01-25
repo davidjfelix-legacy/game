@@ -1,7 +1,4 @@
 #![allow(dead_code)]
-mod element;
-mod chunk {
-
     use std::fmt;
     use std::rc::{Rc, Weak};
 
@@ -124,4 +121,3 @@ mod chunk {
         let unknown = Address::from_string(String::from_str("7"));
         assert_eq!(known, unknown)
     }
-}
