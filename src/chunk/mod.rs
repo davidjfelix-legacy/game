@@ -1,6 +1,7 @@
 #![allow(dead_code)]
 use std::fmt;
 use std::rc::{Rc, Weak};
+use entity::{Vec3f64, Entity};
 
 struct Address {
     x: u64,
@@ -12,26 +13,37 @@ struct Element {
     name: String,
 }
 
-enum ChunkOption<T> {
-    Local(T<LocalChunk>),
+pub enum ChunkOption {
+    Local(Rc<LocalChunk>),
+    Remote(Rc<RemoteChunk>)
+}
+
+pub enum ChildOption {
+    Local(Rc<LocalChunk>),
     Remote(Rc<RemoteChunk>),
     None
 }
 
-struct LocalChunk {
+enum ParentOption {
+    Local(Weak<LocalChunk>),
+    Remote(Rc<RemoteChunk>),
+    None
+}
+
+pub struct LocalChunk {
     address: Address,
     center: Vec3f64,
-    children: [ChunkOption<Rc>; 8],
+    children: [ChildOption; 8],
     child_number: u8,
     entities: Vec<Rc<Entity>>,
     mass: f64,
-    parent: ChunkOption<Weak>,
+    parent: ParentOption,
     scale: u8,
     structure: u64,
     summary: Rc<Element>,
 }
 
-struct RemoteChunk {
+pub struct RemoteChunk {
     connection: i32,
 }
 
@@ -80,32 +92,34 @@ impl fmt::Show for Address {
     }
 }
 
-trait Chunk {
-    fn get_child(&self, x: u8, y: u8, z: u8) -> ChunkOption<Rc>;
-    fn orphan(&self, child: <T>);
-    fn emancipate(&self);
+pub trait Chunk {
+    fn get_child(&self, x: u8, y: u8, z: u8) -> ChildOption;
     fn tick(&self, time_delta: f64);
 }
 
 impl Chunk for LocalChunk {
-    fn get_child(&self, x: u8, y: u8, z: u8) -> ChunkOption<Rc> {
-        match (x, y, z) {
-            (0, 0, 0) => self.children[0],
-            (0, 0, 1) => self.children[1],
-            (0, 1, 0) => self.children[2],
-            (0, 1, 1) => self.children[3],
-            (1, 0, 0) => self.children[4],
-            (1, 0, 1) => self.children[5],
-            (1, 1, 0) => self.children[6],
-            (1, 1, 1) => self.children[7],
+    fn get_child(&self, x: u8, y: u8, z: u8) -> ChildOption {
+        let index = match (x, y, z) {
+            (0, 0, 0) => Some(0),
+            (0, 0, 1) => Some(1),
+            (0, 1, 0) => Some(2),
+            (0, 1, 1) => Some(3),
+            (1, 0, 0) => Some(4),
+            (1, 0, 1) => Some(5),
+            (1, 1, 0) => Some(6),
+            (1, 1, 1) => Some(7),
             _ => None,
+        };
+
+        if index == None {
+            return ChildOption::None
         }
-    }
 
-    fn orphan(&self, child: Rc<Chunk>) {
-    }
-
-    fn emancipate(&self) {
+        match self.children[index] {
+            ChildOption::Local(ref chunk) => ChildOption::Local(*chunk),
+            ChildOption::Remote(ref chunk) => ChildOption::Remote(*chunk),
+            ChildOption::None => ChildOption::None
+        }
     }
 
     fn tick(&self, time_delta: f64) {
@@ -113,6 +127,11 @@ impl Chunk for LocalChunk {
 }
 
 impl Chunk for RemoteChunk {
+    fn get_child(&self, x: u8, y: u8, z: u8) -> ChildOption {
+        ChildOption::None
+    }
+    fn tick (&self, time_delta: f64) {
+    }
 }
 
 #[test]
