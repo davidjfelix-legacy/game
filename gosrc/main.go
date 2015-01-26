@@ -10,17 +10,17 @@ func main() {
     }()
 
     go func() {
-        time.Sleep(6 * time.Second)
+        time.Sleep(4 * time.Second)
         fmt.Println("Second")
     }()
 
     go func() {
-        time.Sleep(4 * time.Second)
+        time.Sleep(8 * time.Second)
         fmt.Println("Third")
     }()
 
     go func() {
-        time.Sleep(2 * time.Second)
+        time.Sleep(3 * time.Second)
         fmt.Println("Fourth")
     }()
 
