@@ -3,7 +3,7 @@ from pulsar import coroutine_return, Pool, task, Connection, AbstractClient
 from pulsar.apps.socket import SocketServer
 
 class ControlProtocol(pulsar.ProtocolConsumer):
-     separator = b'\r\n\r\n'
+    separator = b'\r\n\r\n'
     buffer = b''
 
     def data_received(self, data):
