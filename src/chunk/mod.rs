@@ -24,7 +24,7 @@ pub enum ChildOption {
     None
 }
 
-enum ParentOption {
+pub enum ParentOption {
     Local(Weak<LocalChunk>),
     Remote(Rc<RemoteChunk>),
     None
@@ -33,8 +33,18 @@ enum ParentOption {
 pub struct LocalChunk {
     address: Address,
     center: Vec3f64,
-    children: [ChildOption; 8],
-    child_number: u8,
+    //children: [ChildOption; 8],
+    //FIXME: remove these and uncomment above
+    child0: ChildOption,
+    child1: ChildOption,
+    child2: ChildOption,
+    child3: ChildOption,
+    child4: ChildOption,
+    child5: ChildOption,
+    child6: ChildOption,
+    child7: ChildOption,
+    //END FIXME
+    child_number: Option<u8>,
     entities: Vec<Rc<Entity>>,
     mass: f64,
     parent: ParentOption,
