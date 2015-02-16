@@ -121,6 +121,7 @@ impl Chunk for LocalChunk {
             _ => None,
         };
 
+        /* FIXME: remove
         if index == None {
             return ChildOption::None
         }
@@ -129,7 +130,25 @@ impl Chunk for LocalChunk {
             ChildOption::Local(ref chunk) => ChildOption::Local(*chunk),
             ChildOption::Remote(ref chunk) => ChildOption::Remote(*chunk),
             ChildOption::None => ChildOption::None
+        }*/
+        //SLOP
+        let child = match index {
+            Some(0) => self.child0,
+            Some(1) => self.child1,
+            Some(2) => self.child2,
+            Some(3) => self.child3,
+            Some(4) => self.child4,
+            Some(5) => self.child5,
+            Some(6) => self.child6,
+            Some(7) => self.child7,
+            _ => return None
+        };
+        match child {
+            ChildOption::Local(ref chunk) => ChildOption::Local(*chunk),
+            ChildOption::Remote(ref chunk) => ChildOption::Remote(*chunk),
+            ChildOption::None => ChildOption::None
         }
+        //ENDSLOP
     }
 
     fn tick(&self, time_delta: f64) {
