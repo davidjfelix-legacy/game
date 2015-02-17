@@ -134,14 +134,14 @@ impl Chunk for LocalChunk {
         }*/
         //SLOP
         let child = match (x, y, z) {
-            (0, 0, 0) => Some(self.child0),
-            (0, 0, 1) => Some(self.child1),
-            (0, 1, 0) => Some(self.child2),
-            (0, 1, 1) => Some(self.child3),
-            (1, 0, 0) => Some(self.child4),
-            (1, 0, 1) => Some(self.child5),
-            (1, 1, 0) => Some(self.child6),
-            (1, 1, 1) => Some(self.child7),
+            (0, 0, 0) => Some(ref self.child0),
+            (0, 0, 1) => Some(ref self.child1),
+            (0, 1, 0) => Some(ref self.child2),
+            (0, 1, 1) => Some(ref self.child3),
+            (1, 0, 0) => Some(ref self.child4),
+            (1, 0, 1) => Some(ref self.child5),
+            (1, 1, 0) => Some(ref self.child6),
+            (1, 1, 1) => Some(ref self.child7),
             _ => None,
         };
         match child {
