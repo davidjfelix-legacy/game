@@ -109,6 +109,8 @@ pub trait Chunk {
 
 impl Chunk for LocalChunk {
     fn get_child(&self, x: u8, y: u8, z: u8) -> ChildOption {
+
+        /* FIXME: remove
         let index = match (x, y, z) {
             (0, 0, 0) => Some(0),
             (0, 0, 1) => Some(1),
@@ -121,7 +123,6 @@ impl Chunk for LocalChunk {
             _ => None,
         };
 
-        /* FIXME: remove
         if index == None {
             return ChildOption::None
         }
@@ -132,21 +133,21 @@ impl Chunk for LocalChunk {
             ChildOption::None => ChildOption::None
         }*/
         //SLOP
-        let child = match index {
-            Some(0) => self.child0,
-            Some(1) => self.child1,
-            Some(2) => self.child2,
-            Some(3) => self.child3,
-            Some(4) => self.child4,
-            Some(5) => self.child5,
-            Some(6) => self.child6,
-            Some(7) => self.child7,
-            _ => return None
+        let child = match (x, y, z) {
+            (0, 0, 0) => Some(self.child0),
+            (0, 0, 1) => Some(self.child1),
+            (0, 1, 0) => Some(self.child2),
+            (0, 1, 1) => Some(self.child3),
+            (1, 0, 0) => Some(self.child4),
+            (1, 0, 1) => Some(self.child5),
+            (1, 1, 0) => Some(self.child6),
+            (1, 1, 1) => Some(self.child7),
+            _ => None,
         };
         match child {
-            ChildOption::Local(ref chunk) => ChildOption::Local(*chunk),
-            ChildOption::Remote(ref chunk) => ChildOption::Remote(*chunk),
-            ChildOption::None => ChildOption::None
+            Some(ChildOption::Local(ref chunk)) => ChildOption::Local(*chunk),
+            Some(ChildOption::Remote(ref chunk)) => ChildOption::Remote(*chunk),
+            _ => ChildOption::None
         }
         //ENDSLOP
     }
