@@ -1,16 +1,17 @@
 import asyncio
-import datetime
-import redis
-import uuid
+from datetime import datetime
+from dateutil import parser
+from redis import StrictRedis
+from uuid import UUID, uuid4
 
-redis = redis.StrictRedis(host="localhost", port="6379")
-pid = uuid.uuid4()
+redis = StrictRedis(host="localhost", port="6379")
+pid = uuid4()
 
 @asyncio.coroutine
 def heartbeat(redis, uuid, work):
     while True:
         yield from asyncio.sleep(2)
-        time = datetime.datetime.utcnow().isoformat()
+        time = datetime.utcnow().isoformat()
         pipe = redis.pipeline()
         pipe.set("server-" + str(uuid), "ip-localhost", ex=5)
         pipe.set("chunk-" + work, "server-" + str(uuid), ex=5) 
@@ -18,18 +19,22 @@ def heartbeat(redis, uuid, work):
         pipe.hset("serverchunks", "serverchunk-" + str(uuid), "chunk-" + work)
         pipe.execute()
 
-
 @asyncio.coroutine
 def readbeats(redis):
     while True:
         yield from asyncio.sleep(1)
-        now = datetime.datetime.utcnow()
+        now = datetime.utcnow()
         pipe = redis.pipeline()
         pipe.hgetall("servertimes")
         pipe.hgetall("serverchunks")
         servertimes, serverchunks = pipe.execute() #FIXME: this is binary return
-        print(str(servertimes))
-        print(str(serverchunks))
+        server_times = {}
+        server_chunks = {}
+        for server, time in severtimes.items():
+            server_times[UUID(server[12:])] = parser.parse(time[5:])
+
+        for server, chunk in serverchunks
+            server_chunks[UUID(server[12:])] = UUID(chunk[6:])
 
 @asyncio.coroutine
 def simple_server(reader, writer):
@@ -44,6 +49,7 @@ tasks = [
     asyncio.async(heartbeat(redis, pid, "misc")),
     asyncio.async(readbeats(redis))
 ]
+
 try:
     loop.run_until_complete(asyncio.wait(tasks))
 except KeyboardInterrupt:
