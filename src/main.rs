@@ -2,5 +2,9 @@ mod chunk;
 mod entity;
 
 fn main() {
-    println!("Hello, world!");
+    let mut x = 0;
+    loop {
+        print!("{}\r", x);
+        x += 1;
+    }
 }
