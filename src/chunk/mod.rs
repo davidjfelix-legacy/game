@@ -24,7 +24,7 @@ pub enum ChildOption {
     None
 }
 
-enum ParentOption {
+pub enum ParentOption {
     Local(Weak<LocalChunk>),
     Remote(Rc<RemoteChunk>),
     None
@@ -33,8 +33,18 @@ enum ParentOption {
 pub struct LocalChunk {
     address: Address,
     center: Vec3f64,
-    children: [ChildOption; 8],
-    child_number: u8,
+    //children: [ChildOption; 8],
+    //FIXME: remove these and uncomment above
+    child0: ChildOption,
+    child1: ChildOption,
+    child2: ChildOption,
+    child3: ChildOption,
+    child4: ChildOption,
+    child5: ChildOption,
+    child6: ChildOption,
+    child7: ChildOption,
+    //END FIXME
+    child_number: Option<u8>,
     entities: Vec<Rc<Entity>>,
     mass: f64,
     parent: ParentOption,
@@ -99,6 +109,8 @@ pub trait Chunk {
 
 impl Chunk for LocalChunk {
     fn get_child(&self, x: u8, y: u8, z: u8) -> ChildOption {
+
+        /* FIXME: remove
         let index = match (x, y, z) {
             (0, 0, 0) => Some(0),
             (0, 0, 1) => Some(1),
@@ -119,7 +131,25 @@ impl Chunk for LocalChunk {
             ChildOption::Local(ref chunk) => ChildOption::Local(*chunk),
             ChildOption::Remote(ref chunk) => ChildOption::Remote(*chunk),
             ChildOption::None => ChildOption::None
+        }*/
+        //SLOP
+        let child = match (x, y, z) {
+            (0, 0, 0) => Some(ref self.child0),
+            (0, 0, 1) => Some(ref self.child1),
+            (0, 1, 0) => Some(ref self.child2),
+            (0, 1, 1) => Some(ref self.child3),
+            (1, 0, 0) => Some(ref self.child4),
+            (1, 0, 1) => Some(ref self.child5),
+            (1, 1, 0) => Some(ref self.child6),
+            (1, 1, 1) => Some(ref self.child7),
+            _ => None,
+        };
+        match child {
+            Some(ChildOption::Local(ref chunk)) => ChildOption::Local(*chunk),
+            Some(ChildOption::Remote(ref chunk)) => ChildOption::Remote(*chunk),
+            _ => ChildOption::None
         }
+        //ENDSLOP
     }
 
     fn tick(&self, time_delta: f64) {
