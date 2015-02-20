@@ -132,24 +132,7 @@ impl Chunk for LocalChunk {
             ChildOption::Remote(ref chunk) => ChildOption::Remote(*chunk),
             ChildOption::None => ChildOption::None
         }*/
-        //SLOP
-        let child = match (x, y, z) {
-            (0, 0, 0) => Some(ref self.child0),
-            (0, 0, 1) => Some(ref self.child1),
-            (0, 1, 0) => Some(ref self.child2),
-            (0, 1, 1) => Some(ref self.child3),
-            (1, 0, 0) => Some(ref self.child4),
-            (1, 0, 1) => Some(ref self.child5),
-            (1, 1, 0) => Some(ref self.child6),
-            (1, 1, 1) => Some(ref self.child7),
-            _ => None,
-        };
-        match child {
-            Some(ChildOption::Local(ref chunk)) => ChildOption::Local(*chunk),
-            Some(ChildOption::Remote(ref chunk)) => ChildOption::Remote(*chunk),
-            _ => ChildOption::None
-        }
-        //ENDSLOP
+        ChildOption::None
     }
 
     fn tick(&self, time_delta: f64) {
