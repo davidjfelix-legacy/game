@@ -1,5 +1,5 @@
 #![allow(dead_code)]
-use std::fmt;
+use core::fmt;
 use std::rc::{Rc, Weak};
 use entity::{Vec3f64, Entity};
 
