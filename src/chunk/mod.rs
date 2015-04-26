@@ -1,4 +1,6 @@
 #![allow(dead_code)]
+extern crate core;
+
 use core::fmt;
 use std::rc::{Rc, Weak};
 use entity::{Vec3f64, Entity};
