@@ -142,9 +142,3 @@ impl Chunk for RemoteChunk {
     }
 }
 
-#[test]
-fn test_address_from_string() {
-    let known = Option::Some(Address {x: 0b11, y: 0b11, z: 0b11});
-    let unknown = Address::from_string(String::from_str("7"));
-    assert_eq!(known, unknown)
-}
