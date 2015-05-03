@@ -1,3 +1,5 @@
+#![feature(alloc)]
+#![feature(collections)]
 mod chunk;
 mod entity;
 

@@ -1,7 +1,5 @@
 #![allow(dead_code)]
-extern crate core;
 
-use core::fmt;
 use std::rc::{Rc, Weak};
 use entity::{Vec3f64, Entity};
 
@@ -98,11 +96,6 @@ impl PartialEq for Address {
     }
 }
 
-impl fmt::Show for Address {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "Address({}, {}, {})", self.x, self.y, self.z)
-    }
-}
 
 pub trait Chunk {
     fn get_child(&self, x: u8, y: u8, z: u8) -> ChildOption;
