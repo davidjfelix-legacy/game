@@ -1,36 +1,40 @@
 package main
 
 import "fmt"
-import "time"
+
+type Element struct {
+    name string
+}
+
+type Vec3f64 struct {
+    x float64
+    y float64
+    z float64
+}
+
+type Address struct {
+    x uint64
+    y uint64
+    z uint64
+    depth uint8
+}
+
+type Chunk struct {
+    address Address
+    center Vec3f64
+    children [8]*Chunk
+    child_number uint8
+    //entities vec
+    mass float64
+    parent *Chunk
+    scale uint8
+    structure uint64
+    summary *Element
+}
 
 func main() {
-    go func() {
-        time.Sleep(10 * time.Second)
-        fmt.Println("First")
-    }()
-
-    go func() {
-        time.Sleep(4 * time.Second)
-        fmt.Println("Second")
-    }()
-
-    go func() {
-        time.Sleep(8 * time.Second)
-        fmt.Println("Third")
-    }()
-
-    go func() {
-        time.Sleep(3 * time.Second)
-        fmt.Println("Fourth")
-    }()
-
-    go func() {
-        time.Sleep(1 * time.Second)
-        fmt.Println("Fifth")
-    }()
-
-    // Eternal Slumber
-    fmt.Println("Main")
-    time.Sleep(20 * time.Second)
-    fmt.Println("Yawn")
+    dirt := Element{"dirt"}
+    world := new(Chunk)
+    world.summary = &dirt
+    fmt.Println("hello")
 }

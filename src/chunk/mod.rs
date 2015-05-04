@@ -33,17 +33,7 @@ pub enum ParentOption {
 pub struct LocalChunk {
     address: Address,
     center: Vec3f64,
-    //children: [ChildOption; 8],
-    //FIXME: remove these and uncomment above
-    child0: ChildOption,
-    child1: ChildOption,
-    child2: ChildOption,
-    child3: ChildOption,
-    child4: ChildOption,
-    child5: ChildOption,
-    child6: ChildOption,
-    child7: ChildOption,
-    //END FIXME
+    children: [ChildOption; 8],
     child_number: Option<u8>,
     entities: Vec<Rc<Entity>>,
     mass: f64,
@@ -105,7 +95,6 @@ pub trait Chunk {
 impl Chunk for LocalChunk {
     fn get_child(&self, x: u8, y: u8, z: u8) -> ChildOption {
 
-        /* FIXME: remove
         let index = match (x, y, z) {
             (0, 0, 0) => Some(0),
             (0, 0, 1) => Some(1),
@@ -118,16 +107,14 @@ impl Chunk for LocalChunk {
             _ => None,
         };
 
-        if index == None {
-            return ChildOption::None
+        match index {
+            Some(i) => match self.children[i] {
+                ChildOption::Local(ref chunk) => ChildOption::Local(chunk.clone()),
+                ChildOption::Remote(ref chunk) => ChildOption::Remote(chunk.clone()),
+                ChildOption::None => ChildOption::None
+            },
+            None => ChildOption::None
         }
-
-        match self.children[index] {
-            ChildOption::Local(ref chunk) => ChildOption::Local(*chunk),
-            ChildOption::Remote(ref chunk) => ChildOption::Remote(*chunk),
-            ChildOption::None => ChildOption::None
-        }*/
-        ChildOption::None
     }
 
     fn tick(&self, time_delta: f64) {
