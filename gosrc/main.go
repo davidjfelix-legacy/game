@@ -12,6 +12,18 @@ type Vec3f64 struct {
     z float64
 }
 
+type Chunk interface {
+    addChunk(chunk *Chunk)
+    tick()
+}
+
+type Entity struct {
+    contents Chunk
+    velocity Vec3f64
+    location Vec3f64
+    rotation Vec3f64
+}
+
 type Address struct {
     x uint64
     y uint64
@@ -19,7 +31,7 @@ type Address struct {
     depth uint8
 }
 
-type Chunk struct {
+type LocalChunk struct {
     address Address
     center Vec3f64
     children [8]*Chunk
@@ -32,9 +44,29 @@ type Chunk struct {
     summary *Element
 }
 
+func (l *LocalChunk) addChunk(chunk *Chunk) {
+    fmt.Println("adding chunk")
+}
+
+func (l *LocalChunk) tick() {
+    fmt.Println("ticking")
+}
+
+type RemoteChunk struct {
+    addr string
+}
+
+func (r *RemoteChunk) addChunk(chunk *Chunk) {
+    fmt.Println("adding chunk")
+}
+
+func (r *RemoteChunk) tick() {
+    fmt.Println("ticking")
+}
+
 func main() {
     dirt := Element{"dirt"}
-    world := new(Chunk)
+    world := new(LocalChunk)
     world.summary = &dirt
     fmt.Println("hello")
 }
