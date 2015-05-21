@@ -21,6 +21,10 @@ type LocalChunk struct {
 	summary *Element
 }
 
+func (l *LocalChunk) passToRemote(remote *string, address *Address) {
+	fmt.Println("passing to remote")
+}
+
 func (l *LocalChunk) addChunk(chunk *Chunk) {
 	fmt.Println("adding chunk")
 }
