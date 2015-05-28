@@ -7,6 +7,7 @@ struct Address {
     x: u64,
     y: u64,
     z: u64,
+    depth: u8,
 }
 
 struct Element {
