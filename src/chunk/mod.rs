@@ -52,12 +52,14 @@ impl Address {
     fn from_string(address: String) -> Option<Address> {
         let mut xyz: (u64, u64, u64) = (1, 1, 1);
         let mut xyz_add: (u64, u64, u64);
+        let mut index: u8;
 
-        for (i, c) in address.chars().enumerate() {
-            if i > 63 {
+        for (iedex, character) in address.chars().enumerate() {
+            if index > 63 {
+                index = 63
                 break;
             }
-            xyz_add =  match c.to_digit(8) {
+            xyz_add =  match character.to_digit(8) {
                 Some(0) => (0, 0, 0),
                 Some(1) => (0, 0, 1),
                 Some(2) => (0, 1, 0),
@@ -71,7 +73,7 @@ impl Address {
             xyz = (xyz.0 << 1, xyz.1 << 1, xyz.2 << 1);
             xyz = (xyz.0 + xyz_add.0, xyz.1 + xyz_add.1, xyz.2 + xyz_add.2);
         }
-        Some(Address {x: xyz.0, y: xyz.1, z: xyz.2})
+        Some(Address {x: xyz.0, y: xyz.1, z: xyz.2, depth: index})
     }
 }
 
