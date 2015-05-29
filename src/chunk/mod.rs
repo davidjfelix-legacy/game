@@ -56,7 +56,7 @@ impl Address {
 
         for (iedex, character) in address.chars().enumerate() {
             if index > 63 {
-                index = 63
+                index = 63;
                 break;
             }
             xyz_add =  match character.to_digit(8) {
