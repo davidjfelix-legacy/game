@@ -25,8 +25,12 @@ func (l *LocalChunk) passToRemote(remote *string, address *Address) {
 	fmt.Println("passing to remote")
 }
 
-func (l *LocalChunk) addChunk(chunk *Chunk) {
+func (l *LocalChunk) addChunk(chunk Chunk) {
 	fmt.Println("adding chunk")
+}
+
+func (l *LocalChunk) loadChunk(chunk Chunk) Chunk {
+    return &LocalChunk{}
 }
 
 func (l *LocalChunk) tick() {
@@ -52,7 +56,7 @@ type RemoteChunk struct {
 	addr string
 }
 
-func (r *RemoteChunk) addChunk(chunk *Chunk) {
+func (r *RemoteChunk) addChunk(chunk Chunk) {
 	fmt.Println("adding chunk")
 }
 
