@@ -1,3 +1,5 @@
+package main
+
 type Address struct {
     x uint64
     y uint64
