@@ -3,7 +3,9 @@ package main
 import "fmt"
 
 type Chunk interface {
-	addChunk(chunk *Chunk)
+	addChunk(chunk Chunk)
+	compressChunk(chunk Chunk)
+	splitChunk(chunk Chunk)
 	tick()
 }
 
@@ -29,8 +31,20 @@ func (l *LocalChunk) addChunk(chunk Chunk) {
 	fmt.Println("adding chunk")
 }
 
+func (l *LocalChunk) compressChunk(chunk Chunk) {
+    fmt.Println("compressing chunk")
+}
+
+func (l *LocalChunk) splitChunk(chunk Chunk) {
+    fmt.Println("splitting chunk")
+}
+
 func (l *LocalChunk) loadChunk(chunk Chunk) Chunk {
     return &LocalChunk{}
+}
+
+func (l *LocalChunk) transferChunk(chunk Chunk) {
+    fmt.Println("transfering chunk")
 }
 
 func (l *LocalChunk) tick() {
@@ -58,6 +72,14 @@ type RemoteChunk struct {
 
 func (r *RemoteChunk) addChunk(chunk Chunk) {
 	fmt.Println("adding chunk")
+}
+
+func (r *RemoteChunk) compressChunk(chunk Chunk) {
+    fmt.Println("compressing chunk")
+}
+
+func (r *RemoteChunk) splitChunk(chunk Chunk) {
+    fmt.Println("splitting chunk")
 }
 
 func (r *RemoteChunk) tick() {
