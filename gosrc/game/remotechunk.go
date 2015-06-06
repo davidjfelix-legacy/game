@@ -12,11 +12,15 @@ func (r *RemoteChunk) addChunk(chunk Chunk) {
 }
 
 func (r *RemoteChunk) compressChunk(chunk Chunk) {
-    fmt.Println("compressing chunk")
+	fmt.Println("compressing chunk")
+}
+
+func (r *RemoteChunk) remoteChunk(chunk Chunk)  {
+	fmt.Println("removing chunk")
 }
 
 func (r *RemoteChunk) splitChunk(chunk Chunk) {
-    fmt.Println("splitting chunk")
+	fmt.Println("splitting chunk")
 }
 
 func (r *RemoteChunk) tick() {

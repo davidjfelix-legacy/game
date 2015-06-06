@@ -16,28 +16,24 @@ type LocalChunk struct {
 	summary *Element
 }
 
-func (l *LocalChunk) passToRemote(remote *string, address *Address) {
-	fmt.Println("passing to remote")
-}
-
 func (l *LocalChunk) addChunk(chunk Chunk) {
 	fmt.Println("adding chunk")
 }
 
 func (l *LocalChunk) compressChunk(chunk Chunk) {
-    fmt.Println("compressing chunk")
+	fmt.Println("compressing chunk")
+}
+
+func (l *LocalChunk) removeChunk(chunk Chunk) {
+	fmt.Println("removing chunk")
 }
 
 func (l *LocalChunk) splitChunk(chunk Chunk) {
-    fmt.Println("splitting chunk")
+	fmt.Println("splitting chunk")
 }
 
-func (l *LocalChunk) loadChunk(chunk Chunk) Chunk {
-    return &LocalChunk{}
-}
-
-func (l *LocalChunk) transferChunk(chunk Chunk) {
-    fmt.Println("transfering chunk")
+func (l *LocalChunk) loadChunk(address Address) Chunk {
+	return &LocalChunk{}
 }
 
 func (l *LocalChunk) tick() {
