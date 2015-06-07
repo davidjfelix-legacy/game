@@ -16,15 +16,15 @@ type LocalChunk struct {
 	summary *Element
 }
 
-func (l *LocalChunk) addChunk(chunk Chunk) {
+func (l *LocalChunk) addChunk(chunk Chunk) Chunk {
 	fmt.Println("adding chunk")
 }
 
-func (l *LocalChunk) compressChunk(chunk Chunk) {
+func (l *LocalChunk) compressChunk(chunk Chunk) Chunk {
 	fmt.Println("compressing chunk")
 }
 
-func (l *LocalChunk) removeChunk(chunk Chunk) {
+func (l *LocalChunk) removeChunk(chunk Chunk) Chunk {
 	fmt.Println("removing chunk")
 }
 
