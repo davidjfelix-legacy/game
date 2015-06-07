@@ -10,6 +10,13 @@ struct Address {
     depth: u8,
 }
 
+pub enum AddressLineage {
+    Ancestor,
+    Descendant,
+    Same,
+    None
+}
+
 struct Element {
     name: String,
 }
@@ -72,6 +79,28 @@ impl Address {
             xyz = (xyz.0 + xyz_add.0, xyz.1 + xyz_add.1, xyz.2 + xyz_add.2);
         }
         Some(Address {x: xyz.0, y: xyz.1, z: xyz.2, depth: address.len() as u8})
+    }
+
+    fn lineage(a: Address, b: Address) -> AddressLineage {
+        if a.depth == b.depth {
+            if a == b {
+                AddressLineage::Same
+            }
+            else {
+                AddressLineage::None
+            }
+        }
+        else {
+            if a.depth > b.depth {
+                //FIXME
+                AddressLineage::Ancestor
+
+            }
+            else { // a.depth < b.depth
+                //FIXME
+                AddressLineage::Descendant
+            }
+        }
     }
 }
 
