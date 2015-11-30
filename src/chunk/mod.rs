@@ -81,6 +81,10 @@ impl Address {
         }
         Some(Address {x: xyz.0, y: xyz.1, z: xyz.2, depth: address.len() as u8})
     }
+
+    fn as_coord_vec() -> Vec<coord::Coord> {
+        Vec::new()
+    }
 }
 
 impl PartialEq for Address {
