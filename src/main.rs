@@ -1,5 +1,5 @@
-#![feature(alloc)]
-#![feature(collections)]
+extern crate mio;
+
 mod chunk;
 mod entity;
 

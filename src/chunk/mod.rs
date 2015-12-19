@@ -99,6 +99,22 @@ pub trait Chunk {
     fn tick(&self, time_delta: f64);
 }
 
+impl Chunk {
+    fn index_from_xyz(x: u8, y: u8, z: u8) -> Result<u8, &'static str> {
+        match (x, y, z) {
+            (0, 0, 0) => Ok(0),
+            (0, 0, 1) => Ok(1),
+            (0, 1, 0) => Ok(2),
+            (0, 1, 1) => Ok(3),
+            (1, 0, 0) => Ok(4),
+            (1, 0, 1) => Ok(5),
+            (1, 1, 0) => Ok(6),
+            (1, 1, 1) => Ok(7),
+            _ => Err("Index out of bounds"),
+        }
+    }
+}
+
 impl Chunk for LocalChunk {
     fn get_child(&self, x: u8, y: u8, z: u8) -> ChildOption {
 
