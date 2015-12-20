@@ -27,10 +27,11 @@ pub enum ChunkOption {
     Remote(Rc<RemoteChunk>)
 }
 
-pub enum ChildOption {
-    Local(Rc<LocalChunk>),
-    Remote(Rc<RemoteChunk>),
-    None
+pub type ChunkResult = Result<ChunkOption, ChunkErr>;
+pub type ChildOption = Option<ChunkOption>;
+
+pub enum ChunkErr {
+    OutOfBounds
 }
 
 pub enum ParentOption {
@@ -95,11 +96,11 @@ impl PartialEq for Address {
 
 
 pub trait Chunk {
-    fn get_child(&self, x: u8, y: u8, z: u8) -> ChildOption;
+    fn get_child(&self, coords: coord::Coord) -> ChunkResult;
 }
 
 impl Chunk {
-    fn index_from_xyz(x: u8, y: u8, z: u8) -> Result<u8, &'static str> {
+    fn index_from_xyz(x: u8, y: u8, z: u8) -> Result<usize, &'static str> {
         match (x, y, z) {
             (0, 0, 0) => Ok(0),
             (0, 0, 1) => Ok(1),
@@ -110,27 +111,6 @@ impl Chunk {
             (1, 1, 0) => Ok(6),
             (1, 1, 1) => Ok(7),
             _ => Err("Index out of bounds"),
-        }
-    }
-}
-
-impl Chunk for LocalChunk {
-    fn get_child(&self, x: u8, y: u8, z: u8) -> ChildOption {
-        match Chunk::index_from_xyz(x, y, z) {
-            Ok(i) => match self.children[i as usize] {
-                ChildOption::Local(ref chunk) => ChildOption::Local(chunk.clone()),
-                ChildOption::Remote(ref chunk) => ChildOption::Remote(chunk.clone()),
-                ChildOption::None => ChildOption::None
-            },
-            _ => ChildOption::None
-        }
-    }
-}
-
-impl Chunk for RemoteChunk {
-    fn get_child(&self, x: u8, y: u8, z: u8) -> ChildOption {
-        match Chunk::index_from_xyz(x, y, z) {
-         _ => ChildOption::None
         }
     }
 }
