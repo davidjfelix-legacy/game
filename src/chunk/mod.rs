@@ -96,7 +96,6 @@ impl PartialEq for Address {
 
 pub trait Chunk {
     fn get_child(&self, x: u8, y: u8, z: u8) -> ChildOption;
-    fn tick(&self, time_delta: f64);
 }
 
 impl Chunk {
@@ -117,38 +116,22 @@ impl Chunk {
 
 impl Chunk for LocalChunk {
     fn get_child(&self, x: u8, y: u8, z: u8) -> ChildOption {
-
-        let index = match (x, y, z) {
-            (0, 0, 0) => Some(0),
-            (0, 0, 1) => Some(1),
-            (0, 1, 0) => Some(2),
-            (0, 1, 1) => Some(3),
-            (1, 0, 0) => Some(4),
-            (1, 0, 1) => Some(5),
-            (1, 1, 0) => Some(6),
-            (1, 1, 1) => Some(7),
-            _ => None,
-        };
-
-        match index {
-            Some(i) => match self.children[i] {
+        match Chunk::index_from_xyz(x, y, z) {
+            Ok(i) => match self.children[i as usize] {
                 ChildOption::Local(ref chunk) => ChildOption::Local(chunk.clone()),
                 ChildOption::Remote(ref chunk) => ChildOption::Remote(chunk.clone()),
                 ChildOption::None => ChildOption::None
             },
-            None => ChildOption::None
+            _ => ChildOption::None
         }
-    }
-
-    fn tick(&self, time_delta: f64) {
     }
 }
 
 impl Chunk for RemoteChunk {
     fn get_child(&self, x: u8, y: u8, z: u8) -> ChildOption {
-        ChildOption::None
-    }
-    fn tick (&self, time_delta: f64) {
+        match Chunk::index_from_xyz(x, y, z) {
+         _ => ChildOption::None
+        }
     }
 }
 

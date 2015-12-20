@@ -3,9 +3,8 @@ use std::rc::Rc;
 use std::ops::{
     Add,
     Sub,
-    Deref,
 };
-use chunk::{ChunkOption, Chunk};
+use chunk::{ChunkOption};
 
 pub struct Vec3f64 {
     x: f64,
@@ -18,15 +17,6 @@ pub struct Entity {
     velocity: Vec3f64,
     location: Vec3f64,
     rotation: Vec3f64,
-}
-
-impl Entity {
-    fn tick(&self, time_delta: f64, acceleration: Vec3f64) {
-        match self.mass.deref() {
-            &ChunkOption::Local(ref chunk) => chunk.tick(time_delta),
-            &ChunkOption::Remote(ref chunk) => chunk.tick(time_delta)
-        }
-    }
 }
 
 impl Add<Vec3f64> for Vec3f64 {
