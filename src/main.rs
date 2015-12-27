@@ -4,9 +4,6 @@ mod chunk;
 mod entity;
 
 fn main() {
-    let mut x = 0;
-    loop {
-        print!("{}\r", x);
-        x += 1;
-    }
+    let mut event_loop = mio::EventLoop::new().unwrap();
+    event_loop.run()
 }
